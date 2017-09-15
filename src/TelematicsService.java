@@ -4,8 +4,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class TelematicsService {
@@ -56,23 +56,27 @@ public class TelematicsService {
         Double totalGallonsOfGasConsumed = 0.0;
         Double totalOdometerAtLastOilChange = 0.0;
         Double totalEngineSize = 0.0;
+        Double totalMPG = 0.0;
 
         Double averageOdometer = 0.0;
         Double averageGallonsOfGasConsumed = 0.0;
         Double averageOdometerAtLastOilChange = 0.0;
         Double averageEngineSize = 0.0;
+        Double averageMPG = 0.0;
 
         for( VehicleInfo vehicle: vehicles ) {
             totalOdometer += vehicle.getOdometer();
             totalGallonsOfGasConsumed += vehicle.getGallonsOfGasConsumed();
             totalOdometerAtLastOilChange += vehicle.getOdometerAtLastOilChange();
             totalEngineSize += vehicle.getEngineSizeInLiters();
+            totalMPG += vehicle.calculateMilesPerGallon();
         }
 
         averageOdometer = totalOdometer / vehicles.size();
         averageGallonsOfGasConsumed = totalGallonsOfGasConsumed / vehicles.size();
         averageOdometerAtLastOilChange = totalOdometerAtLastOilChange / vehicles.size();
         averageEngineSize = totalEngineSize / vehicles.size();
+        averageMPG = totalMPG / vehicles.size();
 
         // Read in index.template to a String
         file = new File ("index.template");
@@ -89,21 +93,25 @@ public class TelematicsService {
             ex.printStackTrace();
         }
 
+        DecimalFormat df = new DecimalFormat("#.#");
         // Replace Averages with numbers
         fileContents = fileContents.replace("aveOdometer", averageOdometer.toString());
         fileContents = fileContents.replace("aveConsumption", averageGallonsOfGasConsumed.toString());
         fileContents = fileContents.replace("aveLastOilChange", averageOdometerAtLastOilChange.toString());
         fileContents = fileContents.replace("aveEngineSize", averageEngineSize.toString());
+        fileContents = fileContents.replace("aveMPG", df.format(averageMPG).toString());
 
         // build up the data rows from each vehicle
         String vehicleDataRows = "";
+
         for( VehicleInfo vehicle: vehicles ) {
             vehicleDataRows += "<tr>";
-            vehicleDataRows += "<td>" + vehicle.getVehicleIdentificationNumber() + "</td>";
-            vehicleDataRows += "<td>" + vehicle.getOdometer() + "</td>";
-            vehicleDataRows += "<td>" + vehicle.getGallonsOfGasConsumed() + "</td>";
-            vehicleDataRows += "<td>" + vehicle.getOdometerAtLastOilChange() + "</td>";
-            vehicleDataRows += "<td>" + vehicle.getEngineSizeInLiters() + "</td>";
+            vehicleDataRows += "<td>" + df.format(vehicle.getVehicleIdentificationNumber()) + "</td>";
+            vehicleDataRows += "<td>" + df.format(vehicle.getOdometer()) + "</td>";
+            vehicleDataRows += "<td>" + df.format(vehicle.getGallonsOfGasConsumed()) + "</td>";
+            vehicleDataRows += "<td>" + df.format(vehicle.getOdometerAtLastOilChange()) + "</td>";
+            vehicleDataRows += "<td>" + df.format(vehicle.getEngineSizeInLiters()) + "</td>";
+            vehicleDataRows += "<td>" + df.format(vehicle.calculateMilesPerGallon()) + "</td>";
             vehicleDataRows += "</tr>";
         }
 

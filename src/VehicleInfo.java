@@ -1,3 +1,5 @@
+import java.text.DecimalFormat;
+
 public class VehicleInfo {
     private int vehicleIdentificationNumber;
     private double odometer;
@@ -55,7 +57,11 @@ public class VehicleInfo {
         this.engineSizeInLiters = engineSizeInLiters;
     }
 
-    @Override
+    public Double calculateMilesPerGallon() {
+        return odometer / gallonsOfGasConsumed;
+    }
+
+    /*@Override
     public String toString() {
         return "VehicleInfo{" +
                 "vehicleIdentificationNumber=" + vehicleIdentificationNumber +
@@ -64,5 +70,5 @@ public class VehicleInfo {
                 ", odometerAtLastOilChange=" + odometerAtLastOilChange +
                 ", engineSizeInLiters=" + engineSizeInLiters +
                 '}';
-    }
+    }*/
 }
