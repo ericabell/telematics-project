@@ -63,10 +63,10 @@ public class TelematicsService {
         Double averageEngineSize = 0.0;
 
         for( VehicleInfo vehicle: vehicles ) {
-            totalOdometer += vehicleInfo.getOdometer();
-            totalGallonsOfGasConsumed += vehicleInfo.getGallonsOfGasConsumed();
-            totalOdometerAtLastOilChange += vehicleInfo.getOdometerAtLastOilChange();
-            totalEngineSize += vehicleInfo.getEngineSizeInLiters();
+            totalOdometer += vehicle.getOdometer();
+            totalGallonsOfGasConsumed += vehicle.getGallonsOfGasConsumed();
+            totalOdometerAtLastOilChange += vehicle.getOdometerAtLastOilChange();
+            totalEngineSize += vehicle.getEngineSizeInLiters();
         }
 
         averageOdometer = totalOdometer / vehicles.size();
@@ -94,6 +94,20 @@ public class TelematicsService {
         fileContents = fileContents.replace("aveConsumption", averageGallonsOfGasConsumed.toString());
         fileContents = fileContents.replace("aveLastOilChange", averageOdometerAtLastOilChange.toString());
         fileContents = fileContents.replace("aveEngineSize", averageEngineSize.toString());
+
+        // build up the data rows from each vehicle
+        String vehicleDataRows = "";
+        for( VehicleInfo vehicle: vehicles ) {
+            vehicleDataRows += "<tr>";
+            vehicleDataRows += "<td>" + vehicle.getVehicleIdentificationNumber() + "</td>";
+            vehicleDataRows += "<td>" + vehicle.getOdometer() + "</td>";
+            vehicleDataRows += "<td>" + vehicle.getGallonsOfGasConsumed() + "</td>";
+            vehicleDataRows += "<td>" + vehicle.getOdometerAtLastOilChange() + "</td>";
+            vehicleDataRows += "<td>" + vehicle.getEngineSizeInLiters() + "</td>";
+            vehicleDataRows += "</tr>";
+        }
+
+        fileContents = fileContents.replace("vehicleDataRows", vehicleDataRows);
 
         // write the new file
         filename = "index.html";
