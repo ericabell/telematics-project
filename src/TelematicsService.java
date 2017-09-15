@@ -1,8 +1,12 @@
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
 public class TelematicsService {
 
@@ -27,7 +31,16 @@ public class TelematicsService {
         for (File f : file.listFiles()) {
             if (f.getName().endsWith(".json")) {
                 // Now you have a File object named "f".
-                // You can use this to create a new instance of Scanner
+                try {
+                    ObjectMapper mapper = new ObjectMapper();
+                    VehicleInfo vi = mapper.readValue(f, VehicleInfo.class);
+                    System.out.println("Read from file: " + vi);
+                } catch (FileNotFoundException ex) {
+                    System.out.println("Could not find file *" + f + "*");
+                    ex.printStackTrace();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
             }
         }
 
