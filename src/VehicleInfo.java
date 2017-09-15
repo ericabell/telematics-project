@@ -5,6 +5,13 @@ public class VehicleInfo {
     private double odometerAtLastOilChange;
     private double engineSizeInLiters;
 
+
+    // EXTRAS: add getMilesPerGallon method (only method, not a variable)
+    // and use it to update the dashboard with MPG info
+
+    // MORE EXTRAS: add a timestamp LocalDateTime to the VehicleInfo. Set it in the
+    // report method. show it in the html in a nice human-readable format.
+
     public VehicleInfo() {
     }
 
