@@ -1,4 +1,7 @@
+import java.text.DateFormat;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 public class VehicleInfo {
@@ -58,6 +61,19 @@ public class VehicleInfo {
 
     public void setEngineSizeInLiters(double engineSizeInLiters) {
         this.engineSizeInLiters = engineSizeInLiters;
+    }
+
+    public Date getDateOfService() {
+        return dateOfService;
+    }
+
+    public void setDateOfService(Date dateOfService) {
+        this.dateOfService = dateOfService;
+    }
+
+    public String niceDateOfService() {
+        DateFormat dateTimeInstance = new SimpleDateFormat("mm/dd/yyyy HH:mm:ss");
+        return dateTimeInstance.format(dateOfService);
     }
 
     public Double calculateMilesPerGallon() {

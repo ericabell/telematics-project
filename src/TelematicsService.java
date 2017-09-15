@@ -6,6 +6,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Scanner;
 
 public class TelematicsService {
@@ -15,6 +16,10 @@ public class TelematicsService {
         // the file will overwrite any previous file with the same VIN
         String filename = vehicleInfo.getVehicleIdentificationNumber() + ".json";
         File newFile = new File(filename);
+
+        // set the dateOfService, as required in project specifications
+        Date currentDate = new Date();
+        vehicleInfo.setDateOfService(currentDate);
 
         try {
             FileWriter fileWriter = new FileWriter(newFile);
@@ -94,6 +99,7 @@ public class TelematicsService {
         }
 
         DecimalFormat df = new DecimalFormat("#.#");
+        fileContents = fileContents.replace("numVehicles", String.valueOf(vehicles.size()));
         // Replace Averages with numbers
         fileContents = fileContents.replace("aveOdometer", averageOdometer.toString());
         fileContents = fileContents.replace("aveConsumption", averageGallonsOfGasConsumed.toString());
@@ -106,6 +112,7 @@ public class TelematicsService {
 
         for( VehicleInfo vehicle: vehicles ) {
             vehicleDataRows += "<tr>";
+            vehicleDataRows += "<td>" + vehicle.niceDateOfService() + "</td>";
             vehicleDataRows += "<td>" + df.format(vehicle.getVehicleIdentificationNumber()) + "</td>";
             vehicleDataRows += "<td>" + df.format(vehicle.getOdometer()) + "</td>";
             vehicleDataRows += "<td>" + df.format(vehicle.getGallonsOfGasConsumed()) + "</td>";
