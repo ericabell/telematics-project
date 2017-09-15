@@ -101,10 +101,10 @@ public class TelematicsService {
         DecimalFormat df = new DecimalFormat("#.#");
         fileContents = fileContents.replace("numVehicles", String.valueOf(vehicles.size()));
         // Replace Averages with numbers
-        fileContents = fileContents.replace("aveOdometer", averageOdometer.toString());
-        fileContents = fileContents.replace("aveConsumption", averageGallonsOfGasConsumed.toString());
-        fileContents = fileContents.replace("aveLastOilChange", averageOdometerAtLastOilChange.toString());
-        fileContents = fileContents.replace("aveEngineSize", averageEngineSize.toString());
+        fileContents = fileContents.replace("aveOdometer", df.format(averageOdometer).toString());
+        fileContents = fileContents.replace("aveConsumption", df.format(averageGallonsOfGasConsumed).toString());
+        fileContents = fileContents.replace("aveLastOilChange", df.format(averageOdometerAtLastOilChange).toString());
+        fileContents = fileContents.replace("aveEngineSize", df.format(averageEngineSize).toString());
         fileContents = fileContents.replace("aveMPG", df.format(averageMPG).toString());
 
         // build up the data rows from each vehicle
