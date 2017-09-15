@@ -1,4 +1,5 @@
 import java.text.DecimalFormat;
+import java.util.Date;
 
 public class VehicleInfo {
     private int vehicleIdentificationNumber;
@@ -6,6 +7,8 @@ public class VehicleInfo {
     private double gallonsOfGasConsumed;
     private double odometerAtLastOilChange;
     private double engineSizeInLiters;
+
+    private Date dateOfService;
 
 
     // EXTRAS: add getMilesPerGallon method (only method, not a variable)
