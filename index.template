@@ -7,7 +7,7 @@
         <th>Odometer (miles) |</th><th>Consumption (gallons) |</th><th>Last Oil Change |</th><th>Engine Size (liters)</th>
     </tr>
     <tr>
-        <td align="center">1234.0</td><td align="center">12.0</td><td align="center">1234.0</td align="center"><td align="center">6.0</td>
+        <td align="center">aveOdometer</td><td align="center">aveConsumption</td><td align="center">aveLastOilChange</td align="center"><td align="center">aveEngineSize</td>
     </tr>
 </table>
 <h1 align="center">History</h1>

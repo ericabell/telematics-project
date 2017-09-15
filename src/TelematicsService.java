@@ -28,13 +28,17 @@ public class TelematicsService {
 
         // find all files that end with json and convert back to VehicleInfo objects
         File file = new File(".");
+
+        // each file will be read into a new object and placed in this list
+        ArrayList<VehicleInfo> vehicles = new ArrayList<>();
+
         for (File f : file.listFiles()) {
             if (f.getName().endsWith(".json")) {
                 // Now you have a File object named "f".
                 try {
                     ObjectMapper mapper = new ObjectMapper();
                     VehicleInfo vi = mapper.readValue(f, VehicleInfo.class);
-                    System.out.println("Read from file: " + vi);
+                    vehicles.add(vi);
                 } catch (FileNotFoundException ex) {
                     System.out.println("Could not find file *" + f + "*");
                     ex.printStackTrace();
@@ -46,6 +50,61 @@ public class TelematicsService {
 
         // update dashboard.html to show the data for all the VehicleInfo objects
 
-        //
+        // we will need to compute the averages for: odometer, consumptionOfGas,
+        // lastOilChange, and engineSize
+        Double totalOdometer = 0.0;
+        Double totalGallonsOfGasConsumed = 0.0;
+        Double totalOdometerAtLastOilChange = 0.0;
+        Double totalEngineSize = 0.0;
+
+        Double averageOdometer = 0.0;
+        Double averageGallonsOfGasConsumed = 0.0;
+        Double averageOdometerAtLastOilChange = 0.0;
+        Double averageEngineSize = 0.0;
+
+        for( VehicleInfo vehicle: vehicles ) {
+            totalOdometer += vehicleInfo.getOdometer();
+            totalGallonsOfGasConsumed += vehicleInfo.getGallonsOfGasConsumed();
+            totalOdometerAtLastOilChange += vehicleInfo.getOdometerAtLastOilChange();
+            totalEngineSize += vehicleInfo.getEngineSizeInLiters();
+        }
+
+        averageOdometer = totalOdometer / vehicles.size();
+        averageGallonsOfGasConsumed = totalGallonsOfGasConsumed / vehicles.size();
+        averageOdometerAtLastOilChange = totalOdometerAtLastOilChange / vehicles.size();
+        averageEngineSize = totalEngineSize / vehicles.size();
+
+        // Read in index.template to a String
+        file = new File ("index.template");
+        String fileContents = new String();
+        try {
+            Scanner fileScanner = new Scanner(file);
+            while (fileScanner.hasNext()) {
+                fileContents += fileScanner.nextLine() + "\n";
+            }
+        } //Since this time we are asking for data back from the file
+        //We have to specify what to do if it isn't found
+        catch (FileNotFoundException ex) {
+            System.out.println("Could not find file *" + file + "*");
+            ex.printStackTrace();
+        }
+
+        // Replace Averages with numbers
+        fileContents = fileContents.replace("aveOdometer", averageOdometer.toString());
+        fileContents = fileContents.replace("aveConsumption", averageGallonsOfGasConsumed.toString());
+        fileContents = fileContents.replace("aveLastOilChange", averageOdometerAtLastOilChange.toString());
+        fileContents = fileContents.replace("aveEngineSize", averageEngineSize.toString());
+
+        // write the new file
+        filename = "index.html";
+        newFile = new File(filename);
+
+        try {
+            FileWriter fileWriter = new FileWriter(newFile);
+            fileWriter.write(fileContents);
+            fileWriter.close();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 }
