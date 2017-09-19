@@ -72,22 +72,11 @@ public class VehicleInfo {
     }
 
     public String niceDateOfService() {
-        DateFormat dateTimeInstance = new SimpleDateFormat("mm/dd/yyyy HH:mm:ss");
+        DateFormat dateTimeInstance = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
         return dateTimeInstance.format(dateOfService);
     }
 
     public Double calculateMilesPerGallon() {
         return odometer / gallonsOfGasConsumed;
     }
-
-    /*@Override
-    public String toString() {
-        return "VehicleInfo{" +
-                "vehicleIdentificationNumber=" + vehicleIdentificationNumber +
-                ", odometer=" + odometer +
-                ", gallonsOfGasConsumed=" + gallonsOfGasConsumed +
-                ", odometerAtLastOilChange=" + odometerAtLastOilChange +
-                ", engineSizeInLiters=" + engineSizeInLiters +
-                '}';
-    }*/
 }

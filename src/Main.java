@@ -12,19 +12,19 @@ public class Main {
 
         System.out.println("Please enter the following info about your vehicle.");
 
-        System.out.println("VIN");
+        System.out.println("VIN:");
         newVehicle.setVehicleIdentificationNumber(Integer.parseInt(scanner.nextLine()));
 
-        System.out.println("Odometer");
+        System.out.println("Odometer:");
         newVehicle.setOdometer(Double.parseDouble(scanner.nextLine()));
 
-        System.out.println("Gallons of gas consumed");
+        System.out.println("Gallons of gas consumed:");
         newVehicle.setGallonsOfGasConsumed(Double.parseDouble(scanner.nextLine()));
 
-        System.out.println("Odometer at last oil change");
+        System.out.println("Odometer at last oil change:");
         newVehicle.setOdometerAtLastOilChange(Double.parseDouble(scanner.nextLine()));
 
-        System.out.println("Engine size in liters");
+        System.out.println("Engine size in liters:");
         newVehicle.setEngineSizeInLiters(Double.parseDouble(scanner.nextLine()));
 
         // call the report method from TelematicsService and pass
